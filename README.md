@@ -4,6 +4,9 @@
 StudyDeck is an open-source flashcard app inspired by Anki.
 It focuses on spaced repetition, clean organization, and fast studying — with a bit of AI help if you want it.
 
+![StudyDeck Screenshot1](/assets/Screenshot%202026-02-01%20at%2021-15-06%20StudyDeck%20-%20Building%20decks%20to%20help%20you%20study.png)
+
+
 ## What it does
 
 * Organize cards using decks and sub-decks
@@ -243,3 +246,10 @@ MIT. Do whatever you want with it.
 * Inspired by Anki
 * SM-2 algorithm from SuperMemo
 * Icons from Lucide
+
+# Further pictures
+### view of all created decks
+![StudyDeck Screenshot2](/assets/Screenshot%202026-02-01%20at%2021-15-25%20StudyDeck%20-%20Building%20decks%20to%20help%20you%20study.png)
+
+### view of single card currently being studied
+![StudyDeck Screenshot3](/assets/Screenshot%202026-02-01%20at%2021-16-04%20StudyDeck%20-%20Building%20decks%20to%20help%20you%20study.png)
