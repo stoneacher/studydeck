@@ -42,7 +42,7 @@ It focuses on spaced repetition, clean organization, and fast studying — with 
 If you have Docker, this is the easiest way to run everything:
 
 ```bash
-git clone https://github.com/yourusername/studydeck.git
+git clone https://github.com/stoneacher/studydeck.git
 cd studydeck
 docker compose up -d
 ```
@@ -70,7 +70,6 @@ cd backend
 npm install
 
 cp .env.example .env
-# fill in database credentials
 
 npx prisma migrate dev
 npm run dev
