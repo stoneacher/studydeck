@@ -66,10 +66,12 @@
   
   .flashcard {
     @apply relative w-full aspect-[3/2] perspective-1000;
+    -webkit-perspective: 1000px;
   }
   
   .flashcard-inner {
     @apply relative w-full h-full transition-transform duration-500 transform-style-preserve-3d cursor-pointer;
+    -webkit-transform-style: preserve-3d;
   }
   
   .flashcard-inner.flipped {
@@ -87,7 +89,7 @@
   
   .flashcard-back {
     @apply bg-primary-50 border-2 border-primary-300 rotate-y-180;
-    @apply dark:bg-primary-900/30 dark:border-primary-500;
+    @apply dark:bg-primary-900 dark:border-primary-500;
   }
 }
 
@@ -102,6 +104,7 @@
   
   .backface-hidden {
     backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
   }
   
   .rotate-y-180 {
