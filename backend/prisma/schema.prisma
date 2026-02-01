@@ -1,0 +1,149 @@
+// StudyDeck Database Schema
+// PostgreSQL + Prisma ORM
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// User accounts
+model User {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  passwordHash String   @map("password_hash")
+  name         String?
+  createdAt    DateTime @default(now()) @map("created_at")
+  updatedAt    DateTime @updatedAt @map("updated_at")
+
+  decks         Deck[]
+  studySessions StudySession[]
+  tags          Tag[]
+
+  @@map("users")
+}
+
+// Decks with hierarchical structure (sub-decks)
+model Deck {
+  id          String   @id @default(cuid())
+  name        String
+  description String?
+  userId      String   @map("user_id")
+  parentId    String?  @map("parent_id")
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  user     User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  parent   Deck?  @relation("DeckHierarchy", fields: [parentId], references: [id], onDelete: Cascade)
+  children Deck[] @relation("DeckHierarchy")
+
+  cards         Card[]
+  studySessions StudySession[]
+
+  @@index([userId])
+  @@index([parentId])
+  @@map("decks")
+}
+
+// Card types enum
+enum CardType {
+  BASIC
+  CLOZE
+}
+
+// Flashcards
+model Card {
+  id        String   @id @default(cuid())
+  deckId    String   @map("deck_id")
+  type      CardType @default(BASIC)
+  front     String   // For BASIC: question. For CLOZE: text with {{c1::hidden}} markers
+  back      String   // For BASIC: answer. For CLOZE: can be empty or extra info
+  notes     String?  // Additional notes
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  // Spaced repetition fields (SM-2 algorithm)
+  easeFactor    Float    @default(2.5) @map("ease_factor") // Starting ease factor
+  interval      Int      @default(0) // Days until next review
+  repetitions   Int      @default(0) // Number of successful reviews
+  nextReviewAt  DateTime @default(now()) @map("next_review_at")
+  lastReviewAt  DateTime? @map("last_review_at")
+
+  deck    Deck          @relation(fields: [deckId], references: [id], onDelete: Cascade)
+  reviews CardReview[]
+  tags    CardTag[]
+
+  @@index([deckId])
+  @@index([nextReviewAt])
+  @@map("cards")
+}
+
+// Individual review history for a card
+model CardReview {
+  id         String   @id @default(cuid())
+  cardId     String   @map("card_id")
+  sessionId  String   @map("session_id")
+  quality    Int      // 0-5 rating (SM-2 scale)
+  reviewedAt DateTime @default(now()) @map("reviewed_at")
+
+  // State before this review (for analytics)
+  previousInterval   Int   @map("previous_interval")
+  previousEaseFactor Float @map("previous_ease_factor")
+  newInterval        Int   @map("new_interval")
+  newEaseFactor      Float @map("new_ease_factor")
+
+  card    Card         @relation(fields: [cardId], references: [id], onDelete: Cascade)
+  session StudySession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+
+  @@index([cardId])
+  @@index([sessionId])
+  @@map("card_reviews")
+}
+
+// Study session tracking
+model StudySession {
+  id        String    @id @default(cuid())
+  userId    String    @map("user_id")
+  deckId    String    @map("deck_id")
+  startedAt DateTime  @default(now()) @map("started_at")
+  endedAt   DateTime? @map("ended_at")
+
+  user    User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  deck    Deck         @relation(fields: [deckId], references: [id], onDelete: Cascade)
+  reviews CardReview[]
+
+  @@index([userId])
+  @@index([deckId])
+  @@map("study_sessions")
+}
+
+// Tags for organizing cards
+model Tag {
+  id        String   @id @default(cuid())
+  name      String
+  color     String?  // Hex color for UI
+  userId    String   @map("user_id")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  user  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  cards CardTag[]
+
+  @@unique([userId, name])
+  @@index([userId])
+  @@map("tags")
+}
+
+// Many-to-many relationship between cards and tags
+model CardTag {
+  cardId String @map("card_id")
+  tagId  String @map("tag_id")
+
+  card Card @relation(fields: [cardId], references: [id], onDelete: Cascade)
+  tag  Tag  @relation(fields: [tagId], references: [id], onDelete: Cascade)
+
+  @@id([cardId, tagId])
+  @@map("card_tags")
+}
