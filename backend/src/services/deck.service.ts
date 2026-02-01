@@ -47,10 +47,20 @@ export async function createDeck(userId: string, input: CreateDeckInput): Promis
 
 /**
  * Get all decks for a user with statistics
+ * Optional search filter for name or description
  */
-export async function getDecksWithStats(userId: string): Promise<DeckWithStats[]> {
+export async function getDecksWithStats(userId: string, search?: string): Promise<DeckWithStats[]> {
+  const whereClause: { userId: string; OR?: { name?: { contains: string; mode: 'insensitive' }; description?: { contains: string; mode: 'insensitive' } }[] } = { userId };
+  
+  if (search && search.trim()) {
+    whereClause.OR = [
+      { name: { contains: search, mode: 'insensitive' } },
+      { description: { contains: search, mode: 'insensitive' } },
+    ];
+  }
+  
   const decks = await prisma.deck.findMany({
-    where: { userId },
+    where: whereClause,
     include: {
       cards: {
         select: {

@@ -11,7 +11,11 @@
     "db:migrate": "prisma migrate deploy",
     "db:migrate:dev": "prisma migrate dev",
     "db:push": "prisma db push",
-    "db:seed": "tsx prisma/seed.ts"
+    "db:seed": "tsx prisma/seed.ts",
+    "db:seed:prod": "node dist/prisma/seed.js"
+  },
+  "prisma": {
+    "seed": "npm run db:seed:prod"
   },
   "dependencies": {
     "@prisma/client": "^5.9.1",

@@ -8,9 +8,9 @@ export function Layout() {
       <main className="flex-1">
         <Outlet />
       </main>
-      <footer className="bg-gray-50 border-t border-gray-200 py-6">
+      <footer className="bg-gray-50 dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 py-6">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center text-gray-500 text-sm">
+          <div className="text-center text-gray-500 dark:text-gray-400 text-sm">
             <p>
               StudyDeck - Building decks to help you study
             </p>

@@ -69,7 +69,10 @@ export const auth = {
 
 // Decks API
 export const decks = {
-  list: () => request<import('../types').Deck[]>('/decks'),
+  list: (search?: string) => {
+    const params = search ? `?search=${encodeURIComponent(search)}` : '';
+    return request<import('../types').Deck[]>(`/decks${params}`);
+  },
   
   get: (id: string) => request<import('../types').Deck>(`/decks/${id}`),
   
@@ -244,6 +247,42 @@ export const tags = {
   
   getCards: (id: string) =>
     request<import('../types').Card[]>(`/tags/${id}/cards`),
+};
+
+// Stats API
+export const stats = {
+  getUserStats: () => request<import('../types').UserStats>('/stats'),
+  
+  getAllDeckStats: () => request<import('../types').DeckStats[]>('/stats/decks'),
+  
+  getDeckStats: (deckId: string) =>
+    request<import('../types').DeckStats>(`/stats/decks/${deckId}`),
+};
+
+// User/Profile API
+export const user = {
+  getProfile: () => request<import('../types').User>('/user/me'),
+  
+  updateProfile: (data: { name?: string; email?: string }) =>
+    request<import('../types').User>('/user/me', {
+      method: 'PATCH',
+      body: JSON.stringify(data),
+    }),
+  
+  changePassword: (currentPassword: string, newPassword: string) =>
+    request<{ message: string }>('/user/me/password', {
+      method: 'POST',
+      body: JSON.stringify({ currentPassword, newPassword }),
+    }),
+  
+  deleteAccount: () =>
+    request<{ message: string }>('/user/me', { method: 'DELETE' }),
+};
+
+// Search API
+export const search = {
+  searchDecks: (query: string) =>
+    request<import('../types').Deck[]>(`/decks?search=${encodeURIComponent(query)}`),
 };
 
 export { ApiError };

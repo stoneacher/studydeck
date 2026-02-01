@@ -1,5 +1,5 @@
 import { useEffect, useState, useCallback } from 'react';
-import { Plus, Upload } from 'lucide-react';
+import { Plus, Upload, Search } from 'lucide-react';
 import { decks as decksApi } from '../services/api';
 import type { Deck } from '../types';
 import { DeckCard } from '../components/decks/DeckCard';
@@ -17,10 +17,20 @@ export function DecksPage() {
   const [showImportModal, setShowImportModal] = useState(false);
   const [editingDeck, setEditingDeck] = useState<Deck | null>(null);
   const [deletingDeck, setDeletingDeck] = useState<Deck | null>(null);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [debouncedSearch, setDebouncedSearch] = useState('');
 
-  const loadDecks = useCallback(async () => {
+  // Debounce search
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedSearch(searchQuery);
+    }, 300);
+    return () => clearTimeout(timer);
+  }, [searchQuery]);
+
+  const loadDecks = useCallback(async (search?: string) => {
     try {
-      const data = await decksApi.list();
+      const data = await decksApi.list(search);
       setDecks(data);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to load decks');
@@ -30,34 +40,34 @@ export function DecksPage() {
   }, []);
 
   useEffect(() => {
-    loadDecks();
-  }, [loadDecks]);
+    loadDecks(debouncedSearch);
+  }, [loadDecks, debouncedSearch]);
 
   const handleCreateDeck = async (data: { name: string; description?: string; parentId?: string }) => {
     await decksApi.create(data);
     setShowCreateModal(false);
-    loadDecks();
+    loadDecks(debouncedSearch);
   };
 
   const handleUpdateDeck = async (data: { name: string; description?: string; parentId?: string }) => {
     if (!editingDeck) return;
     await decksApi.update(editingDeck.id, data);
     setEditingDeck(null);
-    loadDecks();
+    loadDecks(debouncedSearch);
   };
 
   const handleDeleteDeck = async () => {
     if (!deletingDeck) return;
     await decksApi.delete(deletingDeck.id);
     setDeletingDeck(null);
-    loadDecks();
+    loadDecks(debouncedSearch);
   };
 
   const handleImport = async (deckId: string, file: File) => {
     try {
       await decksApi.importCsv(deckId, file);
       setShowImportModal(false);
-      loadDecks();
+      loadDecks(debouncedSearch);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Import failed');
     }
@@ -86,8 +96,8 @@ export function DecksPage() {
       {/* Header */}
       <div className="flex items-center justify-between mb-8">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">My Decks</h1>
-          <p className="text-gray-600 mt-1">
+          <h1 className="text-2xl font-bold text-gray-900 dark:text-white">My Decks</h1>
+          <p className="text-gray-600 dark:text-gray-400 mt-1">
             Organize and manage your flashcard decks
           </p>
         </div>
@@ -100,6 +110,20 @@ export function DecksPage() {
             <Plus className="h-4 w-4 mr-2" />
             New Deck
           </button>
+        </div>
+      </div>
+
+      {/* Search Bar */}
+      <div className="mb-6">
+        <div className="relative">
+          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+          <input
+            type="text"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            placeholder="Search decks..."
+            className="input pl-10"
+          />
         </div>
       </div>
 

@@ -29,10 +29,12 @@ const updateDeckSchema = z.object({
 /**
  * GET /api/decks
  * Get all decks for the current user with statistics
+ * Optional query: ?search=term
  */
 router.get('/', async (req: AuthenticatedRequest, res: Response, next) => {
   try {
-    const decks = await deckService.getDecksWithStats(req.user!.id);
+    const search = req.query.search as string | undefined;
+    const decks = await deckService.getDecksWithStats(req.user!.id, search);
     
     res.json({
       success: true,

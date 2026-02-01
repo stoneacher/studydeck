@@ -49,22 +49,22 @@ export function LandingPage() {
   ];
 
   return (
-    <div className="bg-white">
+    <div className="bg-white dark:bg-gray-900">
       {/* Hero Section */}
       <section className="relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-primary-50 via-white to-accent-50" />
+        <div className="absolute inset-0 bg-gradient-to-br from-primary-50 via-white to-accent-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900" />
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 sm:py-32">
           <div className="text-center">
             <div className="flex justify-center mb-6">
               <img src="/logo.svg" alt="StudyDeck" className="h-20 w-20" />
             </div>
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900">
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 dark:text-white">
               Building decks to help you{' '}
               <span className="bg-gradient-to-r from-primary-600 to-accent-600 bg-clip-text text-transparent">
                 study
               </span>
             </h1>
-            <p className="mt-6 text-xl text-gray-600 max-w-2xl mx-auto">
+            <p className="mt-6 text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
               A modern, open-source flashcard app with spaced repetition. 
               Learn anything more effectively with science-backed study methods.
             </p>
@@ -91,13 +91,13 @@ export function LandingPage() {
       </section>
 
       {/* Features Section */}
-      <section className="py-20 bg-gray-50">
+      <section className="py-20 bg-gray-50 dark:bg-gray-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-900">
+            <h2 className="text-3xl font-bold text-gray-900 dark:text-white">
               Everything you need to study effectively
             </h2>
-            <p className="mt-4 text-lg text-gray-600">
+            <p className="mt-4 text-lg text-gray-600 dark:text-gray-300">
               Powerful features designed for students
             </p>
           </div>
@@ -105,13 +105,13 @@ export function LandingPage() {
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             {features.map((feature) => (
               <div key={feature.title} className="card p-6 text-center">
-                <div className="inline-flex items-center justify-center w-12 h-12 rounded-lg bg-primary-100 text-primary-600 mb-4">
+                <div className="inline-flex items-center justify-center w-12 h-12 rounded-lg bg-primary-100 dark:bg-primary-900/50 text-primary-600 dark:text-primary-400 mb-4">
                   <feature.icon className="h-6 w-6" />
                 </div>
-                <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
                   {feature.title}
                 </h3>
-                <p className="text-gray-600">
+                <p className="text-gray-600 dark:text-gray-300">
                   {feature.description}
                 </p>
               </div>
@@ -121,13 +121,13 @@ export function LandingPage() {
       </section>
 
       {/* Card Types Section */}
-      <section className="py-20">
+      <section className="py-20 dark:bg-gray-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-900">
+            <h2 className="text-3xl font-bold text-gray-900 dark:text-white">
               Multiple card types
             </h2>
-            <p className="mt-4 text-lg text-gray-600">
+            <p className="mt-4 text-lg text-gray-600 dark:text-gray-300">
               Create the perfect flashcards for any subject
             </p>
           </div>
@@ -135,25 +135,25 @@ export function LandingPage() {
           <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
             {cardTypes.map((cardType) => (
               <div key={cardType.title} className="card p-6">
-                <h3 className="text-xl font-semibold text-gray-900 mb-2">
+                <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
                   {cardType.title}
                 </h3>
-                <p className="text-gray-600 mb-4">
+                <p className="text-gray-600 dark:text-gray-300 mb-4">
                   {cardType.description}
                 </p>
-                <div className="bg-gray-50 rounded-lg p-4">
+                <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
                   {'front' in cardType.example ? (
                     <div className="space-y-2">
-                      <div className="text-sm text-gray-500">Front:</div>
-                      <div className="font-medium">{cardType.example.front}</div>
-                      <div className="text-sm text-gray-500 mt-2">Back:</div>
-                      <div className="font-medium text-primary-600">{cardType.example.back}</div>
+                      <div className="text-sm text-gray-500 dark:text-gray-400">Front:</div>
+                      <div className="font-medium dark:text-white">{cardType.example.front}</div>
+                      <div className="text-sm text-gray-500 dark:text-gray-400 mt-2">Back:</div>
+                      <div className="font-medium text-primary-600 dark:text-primary-400">{cardType.example.back}</div>
                     </div>
                   ) : (
                     <div>
-                      <div className="text-sm text-gray-500 mb-2">Example:</div>
-                      <div className="font-medium">
-                        The <span className="bg-primary-100 text-primary-700 px-1 rounded">mitochondria</span> is the powerhouse of the cell.
+                      <div className="text-sm text-gray-500 dark:text-gray-400 mb-2">Example:</div>
+                      <div className="font-medium dark:text-white">
+                        The <span className="bg-primary-100 dark:bg-primary-900/50 text-primary-700 dark:text-primary-400 px-1 rounded">mitochondria</span> is the powerhouse of the cell.
                       </div>
                     </div>
                   )}
@@ -199,12 +199,12 @@ export function LandingPage() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20">
+      <section className="py-20 dark:bg-gray-900">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl font-bold text-gray-900 mb-4">
+          <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">
             Ready to start learning?
           </h2>
-          <p className="text-xl text-gray-600 mb-8">
+          <p className="text-xl text-gray-600 dark:text-gray-300 mb-8">
             Create your first deck in minutes. No credit card required.
           </p>
           {!isAuthenticated && (

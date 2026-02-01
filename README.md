@@ -52,9 +52,36 @@ Then open:
 
 This runs:
 
-* PostgreSQL
+* PostgreSQL (port 5432)
 * Backend API (port 3001)
 * Frontend (port 80)
+* Adminer - Database GUI (port 8080)
+
+#### Database GUI (Adminer)
+
+Adminer is included for easy database management:
+
+👉 [http://localhost:8080](http://localhost:8080)
+
+Login with:
+* **System**: PostgreSQL
+* **Server**: db
+* **Username**: postgres
+* **Password**: postgres
+* **Database**: studydeck
+
+#### Seed the database
+
+To populate the database with demo data (sample decks and cards):
+
+```bash
+docker exec studydeck-backend npx prisma db seed
+```
+
+This creates a demo account you can use to explore the app:
+
+* **Email**: demo@studydeck.app
+* **Password**: demo1234
 
 ### Manual setup
 

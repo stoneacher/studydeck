@@ -22,6 +22,9 @@ RUN npx prisma generate
 # Build TypeScript
 RUN npm run build
 
+# Compile seed file separately
+RUN npx tsc prisma/seed.ts --outDir dist/prisma --esModuleInterop --skipLibCheck --module NodeNext --moduleResolution NodeNext --target ES2022
+
 # Production stage
 FROM node:20-alpine AS production
 

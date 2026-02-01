@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider, useAuth } from './hooks/useAuth';
+import { ThemeProvider } from './hooks/useTheme';
 import { Layout } from './components/layout/Layout';
 import { LoadingScreen } from './components/ui/LoadingSpinner';
 
@@ -11,6 +12,7 @@ import { DashboardPage } from './pages/DashboardPage';
 import { DecksPage } from './pages/DecksPage';
 import { DeckDetailPage } from './pages/DeckDetailPage';
 import { StudyPage } from './pages/StudyPage';
+import { ProfilePage } from './pages/ProfilePage';
 
 // Protected route wrapper
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
@@ -98,6 +100,14 @@ function AppRoutes() {
             </ProtectedRoute>
           }
         />
+        <Route
+          path="/profile"
+          element={
+            <ProtectedRoute>
+              <ProfilePage />
+            </ProtectedRoute>
+          }
+        />
 
         {/* Catch all */}
         <Route path="*" element={<Navigate to="/" replace />} />
@@ -109,9 +119,11 @@ function AppRoutes() {
 export default function App() {
   return (
     <BrowserRouter>
-      <AuthProvider>
-        <AppRoutes />
-      </AuthProvider>
+      <ThemeProvider>
+        <AuthProvider>
+          <AppRoutes />
+        </AuthProvider>
+      </ThemeProvider>
     </BrowserRouter>
   );
 }

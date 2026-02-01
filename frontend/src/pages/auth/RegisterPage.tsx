@@ -45,8 +45,8 @@ export function RegisterPage() {
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
           <img src="/logo.svg" alt="StudyDeck" className="h-12 w-12 mx-auto mb-4" />
-          <h1 className="text-2xl font-bold text-gray-900">Create your account</h1>
-          <p className="text-gray-600 mt-2">Start learning with flashcards</p>
+          <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Create your account</h1>
+          <p className="text-gray-600 dark:text-gray-300 mt-2">Start learning with flashcards</p>
         </div>
 
         <div className="card p-6">
@@ -130,9 +130,9 @@ export function RegisterPage() {
             </button>
           </form>
 
-          <div className="mt-6 text-center text-sm text-gray-600">
+          <div className="mt-6 text-center text-sm text-gray-600 dark:text-gray-400">
             Already have an account?{' '}
-            <Link to="/login" className="text-primary-600 hover:text-primary-700 font-medium">
+            <Link to="/login" className="text-primary-600 hover:text-primary-700 dark:text-primary-400 dark:hover:text-primary-300 font-medium">
               Sign in
             </Link>
           </div>

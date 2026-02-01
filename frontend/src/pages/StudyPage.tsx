@@ -117,35 +117,35 @@ export function StudyPage() {
     return (
       <div className="max-w-4xl mx-auto px-4 py-8">
         <div className="text-center py-12">
-          <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-green-100 text-green-600 mb-6">
+          <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-green-100 dark:bg-green-900/50 text-green-600 dark:text-green-400 mb-6">
             <Check className="h-10 w-10" />
           </div>
-          <h1 className="text-2xl font-bold text-gray-900 mb-2">
+          <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
             {sessionStats.reviewed > 0 ? 'Session Complete!' : 'No Cards Due'}
           </h1>
           {sessionStats.reviewed > 0 ? (
             <>
-              <p className="text-gray-600 mb-6">
+              <p className="text-gray-600 dark:text-gray-300 mb-6">
                 You reviewed {sessionStats.reviewed} cards with{' '}
                 {Math.round((sessionStats.correct / sessionStats.reviewed) * 100)}% accuracy
               </p>
               <div className="flex justify-center gap-4 text-sm mb-8">
-                <div className="px-4 py-2 bg-gray-100 rounded-lg">
-                  <div className="text-2xl font-bold text-gray-900">{sessionStats.reviewed}</div>
-                  <div className="text-gray-500">Reviewed</div>
+                <div className="px-4 py-2 bg-gray-100 dark:bg-gray-800 rounded-lg">
+                  <div className="text-2xl font-bold text-gray-900 dark:text-white">{sessionStats.reviewed}</div>
+                  <div className="text-gray-500 dark:text-gray-400">Reviewed</div>
                 </div>
-                <div className="px-4 py-2 bg-green-100 rounded-lg">
-                  <div className="text-2xl font-bold text-green-600">{sessionStats.correct}</div>
-                  <div className="text-green-700">Correct</div>
+                <div className="px-4 py-2 bg-green-100 dark:bg-green-900/50 rounded-lg">
+                  <div className="text-2xl font-bold text-green-600 dark:text-green-400">{sessionStats.correct}</div>
+                  <div className="text-green-700 dark:text-green-300">Correct</div>
                 </div>
-                <div className="px-4 py-2 bg-red-100 rounded-lg">
-                  <div className="text-2xl font-bold text-red-600">{sessionStats.reviewed - sessionStats.correct}</div>
-                  <div className="text-red-700">Again</div>
+                <div className="px-4 py-2 bg-red-100 dark:bg-red-900/50 rounded-lg">
+                  <div className="text-2xl font-bold text-red-600 dark:text-red-400">{sessionStats.reviewed - sessionStats.correct}</div>
+                  <div className="text-red-700 dark:text-red-300">Again</div>
                 </div>
               </div>
             </>
           ) : (
-            <p className="text-gray-600 mb-6">
+            <p className="text-gray-600 dark:text-gray-300 mb-6">
               Great job! Come back later when more cards are due.
             </p>
           )}
@@ -163,13 +163,13 @@ export function StudyPage() {
   }
 
   return (
-    <div className="min-h-[calc(100vh-4rem)] flex flex-col bg-gray-50">
+    <div className="min-h-[calc(100vh-4rem)] flex flex-col bg-gray-50 dark:bg-gray-900">
       {/* Header */}
-      <div className="bg-white border-b border-gray-200 px-4 py-3">
+      <div className="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 px-4 py-3">
         <div className="max-w-4xl mx-auto flex items-center justify-between">
           <Link
             to={`/decks/${deck.id}`}
-            className="flex items-center gap-2 text-gray-600 hover:text-gray-900"
+            className="flex items-center gap-2 text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white"
           >
             <ArrowLeft className="h-5 w-5" />
             <span className="hidden sm:inline">{deck.name}</span>
@@ -177,10 +177,10 @@ export function StudyPage() {
           
           {/* Progress */}
           <div className="flex items-center gap-4">
-            <div className="text-sm text-gray-600">
+            <div className="text-sm text-gray-600 dark:text-gray-300">
               {currentIndex + 1} / {dueCards.length}
             </div>
-            <div className="w-32 h-2 bg-gray-200 rounded-full overflow-hidden">
+            <div className="w-32 h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
               <div
                 className="h-full bg-primary-500 transition-all duration-300"
                 style={{ width: `${((currentIndex + 1) / dueCards.length) * 100}%` }}
@@ -188,7 +188,7 @@ export function StudyPage() {
             </div>
             <button
               onClick={() => setShowShortcuts(!showShortcuts)}
-              className="p-2 text-gray-500 hover:text-gray-700"
+              className="p-2 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200"
               title="Keyboard shortcuts"
             >
               <Info className="h-5 w-5" />
@@ -206,15 +206,15 @@ export function StudyPage() {
       {/* Shortcuts Help */}
       {showShortcuts && (
         <div className="max-w-4xl mx-auto px-4 mt-4">
-          <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 text-sm">
-            <h3 className="font-medium text-blue-900 mb-2">Keyboard Shortcuts</h3>
-            <div className="grid grid-cols-2 gap-2 text-blue-800">
-              <div><kbd className="px-1 bg-blue-100 rounded">Space</kbd> Show answer</div>
-              <div><kbd className="px-1 bg-blue-100 rounded">F</kbd> Flip card</div>
-              <div><kbd className="px-1 bg-blue-100 rounded">1</kbd> Again</div>
-              <div><kbd className="px-1 bg-blue-100 rounded">2</kbd> Hard</div>
-              <div><kbd className="px-1 bg-blue-100 rounded">3</kbd> Good</div>
-              <div><kbd className="px-1 bg-blue-100 rounded">4</kbd> Easy</div>
+          <div className="bg-blue-50 dark:bg-blue-900/30 border border-blue-200 dark:border-blue-800 rounded-lg p-4 text-sm">
+            <h3 className="font-medium text-blue-900 dark:text-blue-100 mb-2">Keyboard Shortcuts</h3>
+            <div className="grid grid-cols-2 gap-2 text-blue-800 dark:text-blue-200">
+              <div><kbd className="px-1 bg-blue-100 dark:bg-blue-800 rounded">Space</kbd> Show answer</div>
+              <div><kbd className="px-1 bg-blue-100 dark:bg-blue-800 rounded">F</kbd> Flip card</div>
+              <div><kbd className="px-1 bg-blue-100 dark:bg-blue-800 rounded">1</kbd> Again</div>
+              <div><kbd className="px-1 bg-blue-100 dark:bg-blue-800 rounded">2</kbd> Hard</div>
+              <div><kbd className="px-1 bg-blue-100 dark:bg-blue-800 rounded">3</kbd> Good</div>
+              <div><kbd className="px-1 bg-blue-100 dark:bg-blue-800 rounded">4</kbd> Easy</div>
             </div>
           </div>
         </div>
@@ -232,7 +232,7 @@ export function StudyPage() {
       </div>
 
       {/* Rating Buttons */}
-      <div className="bg-white border-t border-gray-200 px-4 py-6">
+      <div className="bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 px-4 py-6">
         <div className="max-w-4xl mx-auto">
           {isFlipped ? (
             <RatingButtons onRate={handleRate} />

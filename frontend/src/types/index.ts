@@ -77,6 +77,39 @@ export interface StudyStats {
   dueToday: number;
 }
 
+// Extended user statistics
+export interface UserStats {
+  totalDecks: number;
+  totalCards: number;
+  cardsDueToday: number;
+  cardsStudiedToday: number;
+  cardsStudiedThisWeek: number;
+  currentStreak: number;
+  longestStreak: number;
+  totalReviews: number;
+  averageRetention: number;
+  studyTimeToday: number;
+  recentActivity: DailyActivity[];
+}
+
+export interface DailyActivity {
+  date: string;
+  cardsStudied: number;
+  averageQuality: number;
+}
+
+export interface DeckStats {
+  deckId: string;
+  deckName: string;
+  totalCards: number;
+  newCards: number;
+  learningCards: number;
+  matureCards: number;
+  dueCards: number;
+  averageEaseFactor: number;
+  retentionRate: number;
+}
+
 export interface GeneratedCard {
   front: string;
   back: string;
